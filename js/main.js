@@ -17,6 +17,7 @@ function sliderAuto() {
                 });
             },2000 * index);
             if(index == 3){
+                $sliderLists[0].insertAfter($sliderLists[3])
                 setTimeout(sliderAuto,2000*(index+1));
             }
 

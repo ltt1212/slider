@@ -19,10 +19,67 @@
             </li>
         </ul>
     </div>
-    
-
-
     <script src="lib/jquery.min.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            var timer = null;
+            var pic = $(".slider-container");
+            var oUl = pic.children("ul");
+            var imgWidth = 900;
+            var i = 0;
+            timer = setInterval(function() {
+                oUl.animate({
+                    "left": "-" + imgWidth + 'px'
+                }, 500, "swing",  function(){
+                    $(".slider-container>li").eq(0).appendTo(pic);
+                    $(pic).css('left','0px');
+                });
+            }, 1000);
+        });
+
+//http://blog.csdn.net/yidengmingmie/article/details/50787226
+////http://blog.csdn.net/szu_aker/article/details/51223897
+//        var sliderWidth = 900;
+//        var $sliderObj = $(".slider-contents");
+//        var $sliderLists =$(".slider-list");
+//        var sliderArr = initArr();
+//        console.log(sliderArr[0]);
+//        sliderAuto();
+//        function sliderAuto() {
+//            for (var i = 0 ; i <$sliderLists.length; i++){
+//                (function(index){
+//                    setTimeout(function(){
+//                        $sliderObj.css({
+//                            transform : 'translateX(-' + index*sliderWidth +'px)',
+//                            transition: 'transform 0.5s ease-in'
+//                        });
+//                    },2000 * index);
+////                    if(index == 3){
+////
+////                        setTimeout(function(){
+////                            $sliderLists.eq(0).insertAfter($sliderLists.eq(3));
+////                            $sliderObj.css({left : '0'});
+////                            sliderAuto();
+////                        },2000*(index+1));
+////                    }
+//
+//                })(i);
+//
+//            }
+//        }
+//
+//        function initArr() {
+//            var arr = [];
+//            for (var j = 0; j < $sliderLists.length; j ++){
+//                arr.push($sliderLists[j]);
+//            }
+//            return arr;
+//        }
+    </script>
+
+
+
+
+    <!--<script src="js/main.js"></script>-->
 </body>
 </html>
