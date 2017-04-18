@@ -4,11 +4,10 @@ var listArr = [].slice.call($list); //list 的dom数组
 var len = $list.length;
 var index = 0;
 var activeIndex = 0;
-var preActive = 0;
 prependItem(); //
 
-tId = setInterval(rightMove,3000);
-// var tId = setInterval(leftMove,3000);
+// tId = setInterval(rightMove,3000);
+var tId = setInterval(leftMove,3000);
 
 
 // 按下left(37)和right(39)键触发的事件
@@ -42,7 +41,7 @@ $("#toggle_box").hover(
 );
 
 function rightMove(){
-    $('#pic_list').animate({left:'-=900px'},300,function(){
+    $('#pic_list').stop(false, true).animate({left:'-=900px'},300,function(){
         appendItem();
         $(this).css('left',-900);
     });
@@ -50,7 +49,7 @@ function rightMove(){
 
 
 function leftMove(){
-    $('#pic_list').animate({left:'+=900px'},300,function(){
+    $('#pic_list').stop(false, true).animate({left:'+=900px'},300,function(){
         prependItem();
         $(this).css('left',-900);
         activeIndex -= 1;
@@ -64,19 +63,17 @@ function leftMove(){
 //前插item
 function prependItem() {
     index = index - 1; // index 渐小
-    activeIndex = index + 1;
+    activeIndex = index + 2;
     if(index < 0){
         index = len - 1;
     }
-    if(activeIndex == len){
+    if(activeIndex  == len){
         activeIndex = 0;
     }
     $('#pic_list').prepend(listArr[index]);
     // dots 的焦点变化
-    $dots.eq(activeIndex).removeClass("active");
+    $dots.eq(activeIndex ).removeClass("active");
     $dots.eq(activeIndex - 1).addClass("active");
-
-
 
 }
 //
