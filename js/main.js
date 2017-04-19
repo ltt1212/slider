@@ -1,23 +1,21 @@
 var $list = $("#pic_list>li");
-var $dots = $("#dots>li");
 var listArr = [].slice.call($list); //list 的dom数组
+var $picList = $('#pic_list');
 var len = $list.length;
 var index = 0;
-var activeIndex = 0;
-var key = 0;
+var activeIndex = 0; //dots的默认焦点
 
 prependItem(); //
-
 tId = setInterval(rightMove,3000);
 
 // 按下left(37)和right(39)键触发的事件
 $(window).keydown(function (e) {
     switch (e.which){
-        case (37):
+        case (37): //key left
             clearInterval(tId); // 清除定时器
             leftMove(startMove); //向左滑动
             break;
-        case (39):
+        case (39): //key right
             clearInterval(tId);
             rightMove(startMove);
             break;
@@ -31,12 +29,12 @@ $("#toggle_box").hover(
         clearInterval(tId);
     }, // mouseover时清除定时器
     function () {
-        tId = setInterval(rightMove,3000);
+        startMove();
     }// mouseout
 );
 
 function rightMove(callback){
-    $('#pic_list').stop(false, true).animate({left:'-=900px'},300,function(){
+    $picList.stop(false, true).animate({left:'-=900px'},300,function(){
         appendItem();
         $(this).css('left',-900);
         if(callback){
@@ -48,13 +46,9 @@ function rightMove(callback){
 
 
 function leftMove(callback){
-    $('#pic_list').stop(false, true).animate({left:'+=900px'},300,function(){
+    $picList.stop(false, true).animate({left:'+=900px'},300,function(){
         prependItem();
         $(this).css('left',-900);
-        activeIndex -= 1;
-        if(activeIndex < 0){
-            activeIndex = len - 1;
-        }
         if(callback){
             callback();
         }
@@ -64,33 +58,35 @@ function leftMove(callback){
 //前插item
 function prependItem() {
     index = index - 1; // index 渐小
-    activeIndex = index + 1;
     if(index < 0){
         index = len - 1;
     }
-    if(activeIndex  == len){
-        activeIndex = 0;
-    }
-    $('#pic_list').prepend(listArr[index]);
-    // dots 的焦点变化
-    $dots.eq(activeIndex ).removeClass("active");
-    $dots.eq(activeIndex - 1).addClass("active");
+    $picList.prepend(listArr[index]);
+
+    //dots 的焦点变化
+    activeUpdate();
 
 }
 //
 function appendItem() {
-    $('#pic_list').append(listArr[index]);
+    $picList.append(listArr[index]);
     index = (index + 1) % 4;
-    activeIndex = index +1 ;
-    if(activeIndex == len){
-        activeIndex = 0;
-    }
-    $dots.eq(index).removeClass("active");
-    $dots.eq(activeIndex).addClass("active");
+
+    activeUpdate();
 }
 
 function startMove() {
     clearInterval(tId);
     tId = setInterval(rightMove,3000);
+}
+
+//dots焦点更新
+function activeUpdate() {
+    activeIndex = index +1 ;
+    if(activeIndex == len){
+        activeIndex = 0;
+    }
+    $dots.removeClass("active");
+    $dots.eq(activeIndex).addClass("active");
 }
 
