@@ -1,6 +1,10 @@
+/**
+ * Created by liutingting_sx on 2017/4/17.
+ */
 var $list = $("#pic_list>li");
 var listArr = [].slice.call($list); //list 的dom数组
 var $picList = $('#pic_list');
+var $dots = $("#dots>li")
 var len = $list.length;
 var index = 0;
 var activeIndex = 0; //dots的默认焦点
@@ -23,6 +27,27 @@ $(window).keydown(function (e) {
 
 });
 
+for(var i = 0; i < len; i ++){
+    (function (index) {
+        var distance =  -index * 900;
+        $dots[i].click(function () {
+            $picList.animate({left: distance + 'px'}, 300, function () {
+
+            });
+        });
+
+    })(i);
+}
+//
+// $.each($dots, function (index) {
+//     $dots[index].click(function () {
+//         var distance =  -index * 900;
+//         $picList.animate({left: distance + 'px'}, 300, function () {
+//
+//             });
+//     });
+// });
+
 // slider鼠标滑过的触发事件
 $("#toggle_box").hover(
     function () {
@@ -43,7 +68,17 @@ function rightMove(callback){
     });
 
 }
-
+// function rightMove(callback) {
+//     $picList.addClass('move-right');
+//     $picList.on('webkitTransitionEnd', function () {
+//         $picList.removeClass('move-right');
+//     }, false);
+//     appendItem();
+//     if(callback){
+//         callback();
+//     }
+//
+// }
 
 function leftMove(callback){
     $picList.stop(false, true).animate({left:'+=900px'},300,function(){
